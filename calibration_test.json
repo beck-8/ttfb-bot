@@ -1,0 +1,42 @@
+[
+  {
+    "provider_id": 1,
+    "provider_name": "Kubuxu's dev node",
+    "region": "C=FI;ST=Uusimaa;L=Helsinki",
+    "service_url": "https://pdp-dev.kubuxu.com",
+    "dataset_id": 0,
+    "piece_cid": "",
+    "success": false,
+    "ttfb_ms": 0,
+    "total_time_ms": 0,
+    "size_bytes": 0,
+    "speed_mbps": 0,
+    "error": "No valid sample pieces found"
+  },
+  {
+    "provider_id": 2,
+    "provider_name": "ezpdpz-calib2",
+    "region": "C=GB;ST=Gloucestershire;L=Cheltenham",
+    "service_url": "https://calib2.ezpdpz.net",
+    "dataset_id": 6723,
+    "piece_cid": "bafkzcibex7mrid3hane4xbm4theu2oftodfm726sm4kaye6fgcfe6txt3myraubwhq",
+    "success": true,
+    "ttfb_ms": 1159,
+    "total_time_ms": 2154,
+    "size_bytes": 701249,
+    "speed_mbps": 0.3103906346281298
+  },
+  {
+    "provider_id": 4,
+    "provider_name": "infrafolio-calib",
+    "region": "C=US;ST=Texas;L=Austin",
+    "service_url": "https://caliberation-pdp.infrafolio.com",
+    "dataset_id": 6724,
+    "piece_cid": "bafkzcibf5cgyaait3cg3ig4gv6eyvxve4reqhpk65nmmfteqtjbzyf75n5zgwf5btaja",
+    "success": true,
+    "ttfb_ms": 972,
+    "total_time_ms": 3900,
+    "size_bytes": 14547224,
+    "speed_mbps": 3.557155844614688
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "type": "function",
+    "name": "getNextDataSetId",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint64" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getNextPieceId",
+    "inputs": [{ "name": "setId", "type": "uint256" }],
+    "outputs": [{ "name": "", "type": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getPieceCid",
+    "inputs": [
+      { "name": "setId", "type": "uint256" },
+      { "name": "pieceId", "type": "uint256" }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "components": [{ "name": "data", "type": "bytes" }]
+      }
+    ],
+    "stateMutability": "view"
+  }
+]

@@ -1,0 +1,5 @@
+[
+  { "type": "function", "name": "serviceProviderRegistry", "inputs": [], "outputs": [{ "name": "", "type": "address" }], "stateMutability": "view"},
+  { "type": "function", "name": "viewContractAddress", "inputs": [], "outputs": [{ "name": "", "type": "address" }], "stateMutability": "view"},
+  { "type": "function", "name": "pdpVerifierAddress", "inputs": [], "outputs": [{ "name": "", "type": "address" }], "stateMutability": "view"}
+]

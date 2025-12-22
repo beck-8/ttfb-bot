@@ -1,0 +1,27 @@
+[
+  {
+    "type": "function",
+    "name": "getDataSet",
+    "inputs": [{ "name": "dataSetId", "type": "uint256" }],
+    "outputs": [
+      {
+        "name": "info",
+        "type": "tuple",
+        "components": [
+          { "name": "pdpRailId", "type": "uint256" },
+          { "name": "cacheMissRailId", "type": "uint256" },
+          { "name": "cdnRailId", "type": "uint256" },
+          { "name": "payer", "type": "address" },
+          { "name": "payee", "type": "address" },
+          { "name": "serviceProvider", "type": "address" },
+          { "name": "commissionBps", "type": "uint256" },
+          { "name": "clientDataSetId", "type": "uint256" },
+          { "name": "pdpEndEpoch", "type": "uint256" },
+          { "name": "providerId", "type": "uint256" },
+          { "name": "dataSetId", "type": "uint256" }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  }
+]

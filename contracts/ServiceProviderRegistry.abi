@@ -1,0 +1,48 @@
+[
+  {
+    "type": "function",
+    "name": "getProviderCount",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getProviderWithProduct",
+    "inputs": [
+      { "name": "providerId", "type": "uint256" },
+      { "name": "productType", "type": "uint8" }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "components": [
+          { "name": "providerId", "type": "uint256" },
+          {
+            "name": "providerInfo",
+            "type": "tuple",
+            "components": [
+              { "name": "serviceProvider", "type": "address" },
+              { "name": "payee", "type": "address" },
+              { "name": "name", "type": "string" },
+              { "name": "description", "type": "string" },
+              { "name": "isActive", "type": "bool" }
+            ]
+          },
+          {
+            "name": "product",
+            "type": "tuple",
+            "components": [
+              { "name": "productType", "type": "uint8" },
+              { "name": "capabilityKeys", "type": "string[]" },
+              { "name": "isActive", "type": "bool" }
+            ]
+          },
+          { "name": "productCapabilityValues", "type": "bytes[]" }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  }
+]

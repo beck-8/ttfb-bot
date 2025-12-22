@@ -1,4 +1,0 @@
-ProviderID,Name,Region,Success,TTFB(ms),Speed(MB/s),Error,PieceCid
-1,Kubuxu's dev node,C=FI;ST=Uusimaa;L=Helsinki,false,0,0.00,No valid sample pieces found,
-2,ezpdpz-calib2,C=GB;ST=Gloucestershire;L=Cheltenham,true,698,0.39,,bafkzcibex7mrid3hane4xbm4theu2oftodfm726sm4kaye6fgcfe6txt3myraubwhq
-4,infrafolio-calib,C=US;ST=Texas;L=Austin,false,926,0.00,Read error: context deadline exceeded (Client.Timeout or context cancellation while reading body),bafkzcibgu2g5tvqbdhdb42o2dd4e4lircesnthrdzxnqlimzmosod6y3ulhuexgs5xjto

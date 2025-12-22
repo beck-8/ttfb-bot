@@ -59,6 +59,11 @@ var RunCmd = &cli.Command{
 			Usage:   "Limit number of providers to test (0 = all)",
 		},
 		&cli.Uint64Flag{
+			Name:  "scan-limit",
+			Value: 1000,
+			Usage: "Number of global datasets to scan for candidates",
+		},
+		&cli.Uint64Flag{
 			Name:    "provider-id",
 			Aliases: []string{"pid"},
 			Usage:   "Run test on a specific provider only",
@@ -126,6 +131,11 @@ var RunCmd = &cli.Command{
 			samples = 1
 		}
 
+		scanLimit := c.Uint64("scan-limit")
+		if scanLimit == 0 {
+			scanLimit = 1000
+		}
+
 		// Channel for results
 		resultsChan := make(chan AggregateResult, len(providers))
 		var wg sync.WaitGroup
@@ -153,7 +163,7 @@ var RunCmd = &cli.Command{
 				}
 
 				// Scan for potential pieces
-				datasets, err := s.Dataset.GetDatasetsForProvider(context.Background(), prov.ID, 300)
+				datasets, err := s.Dataset.GetDatasetsForProvider(context.Background(), prov.ID, scanLimit)
 				if err != nil {
 					agg.Error = fmt.Sprintf("Scan failed: %v", err)
 					resultsChan <- agg

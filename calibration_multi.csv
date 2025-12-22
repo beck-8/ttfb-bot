@@ -1,6 +1,0 @@
-ProviderID,Name,Region,LocalRegion,Samples,SuccessRate,AvgTTFB(ms),P95TTFB(ms),AvgSpeed(MB/s),Error,PieceCid
-1,Kubuxu's dev node,C=FI;ST=Uusimaa;L=Helsinki,C=SG;ST=North West;L=Singapore,3,0.00,0,0,0.00,No valid sample pieces found,
-6,beck-calib,C=CN;ST=Zhejiang;L=Hangzhou,C=SG;ST=North West;L=Singapore,3,1.00,26,55,11.99,,bafkzcibe3kjqcdqjjn4sz7k5zuompsx3phjddwheikfdfhxgbe5xnxuyw4zs4g3jhu
-2,ezpdpz-calib2,C=GB;ST=Gloucestershire;L=Cheltenham,C=SG;ST=North West;L=Singapore,3,1.00,400,717,0.86,,bafkzcibe3kjqcdqjjn4sz7k5zuompsx3phjddwheikfdfhxgbe5xnxuyw4zs4g3jhu
-5,Mongo2Stor,C=US;ST=California;L=Chino,C=SG;ST=North West;L=Singapore,3,1.00,528,942,0.16,,bafkzcibe3kjqcdqjjn4sz7k5zuompsx3phjddwheikfdfhxgbe5xnxuyw4zs4g3jhu
-4,infrafolio-calib,C=US;ST=Texas;L=Austin,C=SG;ST=North West;L=Singapore,3,0.00,0,0,0.00,Read error: context deadline exceeded (Client.Timeout or context cancellation while reading body),bafkzcibgu2g5tvqbdhdb42o2dd4e4lircesnthrdzxnqlimzmosod6y3ulhuexgs5xjto

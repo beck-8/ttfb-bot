@@ -38,10 +38,18 @@ type ProviderInfo struct {
 	Name        string
 }
 
-func (s *DiscoveryService) GetActiveProviders(ctx context.Context) ([]ProviderInfo, error) {
+type DiscoveryOptions struct {
+	IncludeDev bool
+}
+
+func (s *DiscoveryService) GetActiveProviders(ctx context.Context, opts *DiscoveryOptions) ([]ProviderInfo, error) {
 	count, err := s.registryContract.GetProviderCount(&bind.CallOpts{Context: ctx})
 	if err != nil {
 		return nil, fmt.Errorf("failed to get provider count: %w", err)
+	}
+
+	if opts == nil {
+		opts = &DiscoveryOptions{}
 	}
 
 	var providers []ProviderInfo
@@ -62,6 +70,7 @@ func (s *DiscoveryService) GetActiveProviders(ctx context.Context) ([]ProviderIn
 
 		serviceURL := ""
 		region := ""
+		isDev := false
 
 		// Decode capabilities
 		// Capabilities are keys (string[]) and values (bytes[])
@@ -77,7 +86,16 @@ func (s *DiscoveryService) GetActiveProviders(ctx context.Context) ([]ProviderIn
 				serviceURL = string(valBytes)
 			case "location":
 				region = string(valBytes)
+			case "service_status":
+				// Align with dealbot: filter out "dev" unless explicitly included
+				if string(valBytes) == "dev" {
+					isDev = true
+				}
 			}
+		}
+
+		if isDev && !opts.IncludeDev {
+			continue
 		}
 
 		// Clean up Service URL (remove trailing slash, etc)

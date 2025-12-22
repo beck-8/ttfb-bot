@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/filoz/ttfb-bot/pkg/pdp"
 	"github.com/urfave/cli/v2"
 )
 
@@ -14,6 +15,12 @@ var ListCmd = &cli.Command{
 		{
 			Name:  "providers",
 			Usage: "List active PDP providers",
+			Flags: []cli.Flag{
+				&cli.BoolFlag{
+					Name:  "include-dev",
+					Usage: "Include providers marked as 'dev'",
+				},
+			},
 			Action: func(c *cli.Context) error {
 				s, err := SetupServices(c)
 				if err != nil {
@@ -22,7 +29,9 @@ var ListCmd = &cli.Command{
 				defer s.Client.Close()
 
 				fmt.Println("Fetching active PDP providers...")
-				providers, err := s.Discovery.GetActiveProviders(c.Context)
+
+				includeDev := c.Bool("include-dev")
+				providers, err := s.Discovery.GetActiveProviders(c.Context, &pdp.DiscoveryOptions{IncludeDev: includeDev})
 				if err != nil {
 					return err
 				}
@@ -49,6 +58,10 @@ var ListCmd = &cli.Command{
 					Value:   200,
 					Usage:   "Number of recent datasets to scan",
 				},
+				&cli.BoolFlag{
+					Name:  "include-dev",
+					Usage: "Include providers marked as 'dev' (when auto-selecting)",
+				},
 			},
 			Action: func(c *cli.Context) error {
 				s, err := SetupServices(c)
@@ -62,7 +75,8 @@ var ListCmd = &cli.Command{
 
 				if pid == 0 {
 					fmt.Println("No provider ID specified, picking first active provider...")
-					providers, err := s.Discovery.GetActiveProviders(c.Context)
+					includeDev := c.Bool("include-dev")
+					providers, err := s.Discovery.GetActiveProviders(c.Context, &pdp.DiscoveryOptions{IncludeDev: includeDev})
 					if err != nil || len(providers) == 0 {
 						return fmt.Errorf("no active providers found: %v", err)
 					}

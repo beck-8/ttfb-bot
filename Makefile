@@ -1,7 +1,6 @@
 .PHONY: all build gen clean run test
 
 APP_NAME := ttfb
-OUT_DIR := bin
 ABI_DIR := contracts
 GEN_DIR := pkg/contracts
 
@@ -9,7 +8,7 @@ all: build
 
 build:
 	@echo "Building $(APP_NAME)..."
-	@go build -o $(OUT_DIR)/$(APP_NAME) cmd/ttfb/main.go
+	go build -o $(APP_NAME) cmd/ttfb/main.go
 
 gen:
 	@echo "Generating contract bindings..."
@@ -22,11 +21,12 @@ gen:
 
 clean:
 	@echo "Cleaning..."
-	@rm -rf $(OUT_DIR)
+	@rm -f $(APP_NAME)
+	@rm -rf bin/
 	@rm -rf $(GEN_DIR)/*/*.go
 
 run: build
-	@$(OUT_DIR)/$(APP_NAME)
+	@./$(APP_NAME)
 
 test:
 	@go test ./...

@@ -54,8 +54,18 @@ var RunCmd = &cli.Command{
 			Usage:   "Number of concurrent provider tests",
 		},
 		&cli.Uint64Flag{
-			Name:  "limit-providers",
-			Usage: "Limit number of providers to test (0 = all)",
+			Name:    "limit-providers",
+			Aliases: []string{"limit"},
+			Usage:   "Limit number of providers to test (0 = all)",
+		},
+		&cli.Uint64Flag{
+			Name:    "provider-id",
+			Aliases: []string{"pid"},
+			Usage:   "Run test on a specific provider only",
+		},
+		&cli.BoolFlag{
+			Name:  "include-dev",
+			Usage: "Include providers marked as 'dev'",
 		},
 		&cli.IntFlag{
 			Name:    "samples",
@@ -78,15 +88,37 @@ var RunCmd = &cli.Command{
 		fmt.Printf("Tester Region detected: %s\n", localRegion)
 
 		fmt.Println("Step 1: Discovering active providers...")
-		providers, err := s.Discovery.GetActiveProviders(c.Context)
+
+		opts := &pdp.DiscoveryOptions{
+			IncludeDev: c.Bool("include-dev"),
+		}
+
+		providers, err := s.Discovery.GetActiveProviders(c.Context, opts)
 		if err != nil {
 			return err
 		}
 		fmt.Printf("Found %d active providers.\n", len(providers))
 
-		limit := c.Uint64("limit-providers")
-		if limit > 0 && limit < uint64(len(providers)) {
-			providers = providers[:limit]
+		// Filter if --provider-id is set
+		targetPid := c.Uint64("provider-id")
+		if targetPid > 0 {
+			var filtered []pdp.ProviderInfo
+			for _, p := range providers {
+				if p.ID == targetPid {
+					filtered = append(filtered, p)
+					break
+				}
+			}
+			providers = filtered
+			if len(providers) == 0 {
+				return fmt.Errorf("provider %d not found in active list (check --include-dev)", targetPid)
+			}
+			fmt.Printf("Targeting single provider: %d (%s)\n", providers[0].ID, providers[0].Name)
+		} else {
+			limit := c.Uint64("limit-providers")
+			if limit > 0 && limit < uint64(len(providers)) {
+				providers = providers[:limit]
+			}
 		}
 
 		samples := c.Int("samples")
@@ -121,8 +153,6 @@ var RunCmd = &cli.Command{
 				}
 
 				// Scan for potential pieces
-				// We need enough candidates to pick 'samples' distinct ones.
-				// Scanning 200 should be enough to find a few pieces.
 				datasets, err := s.Dataset.GetDatasetsForProvider(context.Background(), prov.ID, 300)
 				if err != nil {
 					agg.Error = fmt.Sprintf("Scan failed: %v", err)

@@ -1,0 +1,23 @@
+# Binaries
+bin/
+ttfb
+
+# OS Specifics
+.DS_Store
+.idea/
+.vscode/
+
+# Dependencies
+vendor/
+
+# Virtual Environment
+venv/
+__pycache__/
+
+# Output Reports
+*.csv
+*.json
+*.png
+
+# Logs
+*.log

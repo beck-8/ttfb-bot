@@ -78,6 +78,11 @@ var RunCmd = &cli.Command{
 			Value:   3,
 			Usage:   "Number of distinct files to test per provider",
 		},
+		&cli.BoolFlag{
+			Name:    "ping",
+			Aliases: []string{"p"},
+			Usage:   "Run a simple ping test to /pdp/ping instead of downloading pieces",
+		},
 	},
 	Action: func(c *cli.Context) error {
 		rand.Seed(time.Now().UnixNano())
@@ -160,6 +165,41 @@ var RunCmd = &cli.Command{
 					ServiceURL:   prov.ServiceURL,
 					Samples:      samples,
 					LocalRegion:  localRegion,
+				}
+
+				if c.Bool("ping") {
+					targetURL := fmt.Sprintf("%s/pdp/ping", prov.ServiceURL)
+
+					t := tester.NewTester()
+					var ttfbs []float64
+					var errors []string
+
+					for i := 0; i < samples; i++ {
+						metrics := t.DownloadPiece(targetURL)
+						if metrics.Success {
+							agg.SuccessCount++
+							ttfbs = append(ttfbs, float64(metrics.TTFB.Milliseconds()))
+						} else {
+							errors = append(errors, metrics.Error)
+						}
+						// Small delay
+						if i < samples-1 {
+							time.Sleep(200 * time.Millisecond)
+						}
+					}
+
+					if agg.SuccessCount > 0 {
+						agg.AvgTTFB_MS = int64(avg(ttfbs))
+						agg.P95TTFB_MS = int64(percentile(ttfbs, 95))
+						agg.SuccessRate = float64(agg.SuccessCount) / float64(samples)
+					}
+
+					if len(errors) > 0 {
+						agg.Error = strings.Join(removeDuplicateStrings(errors), "; ")
+					}
+
+					resultsChan <- agg
+					return
 				}
 
 				// Scan for potential pieces
